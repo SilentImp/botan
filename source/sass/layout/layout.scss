@@ -1,0 +1,109 @@
+@import '../helper/helper';
+
+html{
+  body{
+    font-family: Times, 'Times New Roman', sans-serif;
+    &>header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      line-height: 40px;
+      .info{
+        position: fixed;
+        right: 0;
+        top: 0;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+        color: $white;
+        width: 70px;
+        line-height: 40px;
+        font-size: 10px;
+        background-color: $black;
+        font-family: 'PF Din', sans-serif;
+        }
+      .video{
+        position: fixed;
+        left: 0;
+        top: 0;
+        text-decoration: none;
+        color: $half-black;
+        font-family: 'PF Din', sans-serif;
+        text-transform: uppercase;
+        line-height: 40px;
+        font-size: 10px;
+        &:before{
+          content:"";
+          display: inline-block;
+          vertical-align: top;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          font-style: 0;
+          overflow: hidden;
+          margin: 0 5px 0 0;
+          background: $black url('../svg/cinema.svg') 50% 50% no-repeat;
+          }
+        }
+      .logotype{
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: 80px;
+        height: 40px;
+        overflow: hidden;
+        margin: auto;
+        text-decoration: none;
+        background: url('../svg/logotype.svg') 50% 50% no-repeat;
+        text-indent: -999px;
+        font-style: 0;
+        line-height: 0;
+        }
+      }
+    &>footer{
+      position: fixed;
+      bottom: 0;
+      left: 20px;
+      right: 10px;
+      height: 30px;
+      line-height: 30px;
+      .developed-by{
+        float: right;
+        text-decoration: none;
+        width: 40px;
+        height: 30px;
+        display: inline-block;
+        font-size: 0;
+        line-height: 0;
+        overflow: hidden;
+        text-indent: -9999px;
+        background: url('../svg/cbt.svg') 50% 50% no-repeat;
+        }
+      .map{
+        float: left;
+        text-decoration: none;
+        color: $half-black;
+        height: 30px;
+        line-height: 30px;
+        font-size: 10px;
+        text-transform: uppercase;
+        font-family: 'PF Din', sans-serif;
+        &:before{
+          width: 10px;
+          height: 12px;
+          content:"";
+          display: inline-block;
+          vertical-align: middle;
+          background: url('../svg/place.svg') 50% 50% no-repeat;
+          font-size: 0;
+          line-height: 0;
+          margin: 0 7px 0 0;
+          position: relative;
+          top: -3px;
+          }
+        }
+      }
+    }
+  }
