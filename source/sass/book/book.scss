@@ -1,24 +1,39 @@
 @import '../helper/helper';
 
-//800 100vh
-//560 70vh
-
-//1280 100vw
-//941
-//100
-
 .book{
-  max-height: 560px;
+  height: 560px;
   max-width: 941px;
-  height: 70vh;
   width: 73.515625vw;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
   margin: auto;
   border: 1px solid $black;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  position: relative;
+  &:before{
+    content: "";
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 50%;
+    height: 20px;
+    background: url('../images/shadow-left.png') 0 100% no-repeat;
+    background-size: auto 20px;
+    }
+  &:after{
+    content: "";
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 50%;
+    height: 20px;
+    background: url('../images/shadow-right.png') 100% 100% no-repeat;
+    background-size: auto 20px;
+    }
   &__prev,
   &__next{
     cursor: pointer;
@@ -37,7 +52,7 @@
     background-repeat: no-repeat;
     transition: opacity .25s;
     &_disabled{
-      opacity: .2;
+      opacity: 0;
       pointer-events: none;
       cursor: default;
       }
@@ -85,6 +100,7 @@
     border-left: 1px solid $third-black;
     position: relative;
     white-space: normal;
+    user-select: text;
     &_inverse,
     &_green,
     &_red,
@@ -254,12 +270,69 @@
     }
   }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1240px) {
   html>body .book{
-    max-width: 470px;
+    width: 470px;
+    &:before{
+      width: 100%;
+      }
+    &:after{
+      display: none;
+      }
     &__page{
       width: 100%;
+      padding: 0 100px;
       border-left-style: none;
+      &_title{
+        padding: 0;
+        }
+      &_cover,
+      &_full-cover{
+        padding: 0 20px;
+        }
+      }
+    }
+  }
+
+@media screen and (max-height: 800px) {
+  html>body .book{
+    &__page{
+      line-height: 560px;
+      }
+    }
+  }
+
+@media screen and (max-width: 800px) {
+  html>body .book{
+      &__navigation{
+        display: none;
+        }
+      }
+    }
+
+@media screen and (max-width: 472px) {
+  html>body{
+    &>header{
+      .video{
+        font-style: 0;
+        line-height: 0;
+        text-indent: -999px;
+        &:before{
+          position: absolute;
+          top: 0;
+          left: 0;
+          }
+        }
+      }
+    .book{
+      width: 100%;
+      border-style: none;
+      vertical-align: top;
+      &__page{
+        width: 100%;
+        border-style: none;
+        padding: 0 20px;
+        }
       }
     }
   }

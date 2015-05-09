@@ -3,15 +3,18 @@
 html{
   body{
     font-family: Times, 'Times New Roman', sans-serif;
+    min-height: 770px;
+    padding: 0 0 30px;
+    line-height: calc(100vh - 70px);
+    text-align: center;
+    position: relative;
+    user-select: none;
     &>header{
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      position: relative;
       height: 40px;
       line-height: 40px;
       .info{
-        position: fixed;
+        position: absolute;
         right: 0;
         top: 0;
         text-decoration: none;
@@ -25,7 +28,7 @@ html{
         font-family: 'PF Din', sans-serif;
         }
       .video{
-        position: fixed;
+        position: absolute;
         left: 0;
         top: 0;
         text-decoration: none;
@@ -48,7 +51,7 @@ html{
           }
         }
       .logotype{
-        position: fixed;
+        position: absolute;
         left: 0;
         right: 0;
         width: 80px;
@@ -63,7 +66,7 @@ html{
         }
       }
     &>footer{
-      position: fixed;
+      position: absolute;
       bottom: 0;
       left: 20px;
       right: 10px;
@@ -90,6 +93,7 @@ html{
         font-size: 10px;
         text-transform: uppercase;
         font-family: 'PF Din', sans-serif;
+        user-select: text;
         &:before{
           width: 10px;
           height: 12px;
@@ -105,5 +109,19 @@ html{
           }
         }
       }
+    }
+  }
+
+
+@media screen and (max-height: 800px) {
+  html>body{
+    line-height: 730px;
+    }
+  }
+
+@media screen and (max-width: 472px) {
+  html>body{
+    min-height: initial;
+    line-height: 0;
     }
   }

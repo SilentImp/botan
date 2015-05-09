@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 html(lang="ru")
-head
-  meta(charset="UTF-8")
-  block title
-    title bOtaN
-  link(rel="stylesheet", href="css/styles.css")
-body
-  header
-    a(href="/")
-      h1.logotype bOtaN
-    a.info(href="#") Инфо
-    a.video(href="#") – посмотреть видео
-  block content
-  footer
-    a.map(href="https://goo.gl/maps/jFOIK", target="_blank") библиотека “botan”, ул. воздвижеская 78-68
-    a.developed-by(href="http://territory.com.ua/", target="_blank") CB T
-  
-  script(src="js/modernizr/modernizr.js")  
-  script(src="js/jquery/dist/jquery.min.js")
-  script(src="js/scripts.js", async, def)
+  head
+    meta(charset="UTF-8")
+    meta( name="viewport", content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1")
+    block title
+      title bOtaN
+    link(rel="stylesheet", href="css/styles.css")
+  body
+    header
+      a(href="/")
+        h1.logotype bOtaN
+      a.info(href="#") Инфо
+      a.video(href="#") – посмотреть видео
+    block content
+    footer
+      a.map(href="https://goo.gl/maps/jFOIK", target="_blank") библиотека “botan”, ул. воздвижеская 78-68
+      a.developed-by(href="http://territory.com.ua/", target="_blank") CB T
+
+    script(src="js/modernizr/modernizr.js")
+    script(src="js/hammer.js/hammer.min.js")
+    script(src="js/jquery/dist/jquery.min.js")
+    script(src="js/scripts.js", async, def)
