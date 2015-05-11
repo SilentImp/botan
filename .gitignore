@@ -1,5 +1,5 @@
-./build
-./node_modultes
+build
+node_modules
 ^\.*
 !.gitignore
 !.bowerrc
