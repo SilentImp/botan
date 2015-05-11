@@ -68,9 +68,9 @@ book = (function() {
     this.forward_part_3 = bind(this.forward_part_3, this);
     this.forward_part_2 = bind(this.forward_part_2, this);
     this.forward_part_1 = bind(this.forward_part_1, this);
+    this.end_animation = bind(this.end_animation, this);
     this.moveNext = bind(this.moveNext, this);
     this.buttonState = bind(this.buttonState, this);
-    this.unblockButtons = bind(this.unblockButtons, this);
     this.resizer = bind(this.resizer, this);
     this.book = $('.book');
     if (this.book.length === 0) {
@@ -165,10 +165,6 @@ book = (function() {
     })(this), 600);
   };
 
-  book.prototype.unblockButtons = function() {
-    return this.clickable = true;
-  };
-
   book.prototype.buttonState = function() {
     var last_page;
     if (this.page_number === 0) {
@@ -196,7 +192,6 @@ book = (function() {
   };
 
   book.prototype.moveNext = function() {
-    var tmp;
     if (!this.clickable) {
       return;
     }
@@ -213,21 +208,34 @@ book = (function() {
       }
       return;
     }
+    this.clickable = false;
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
-      this.clickable = false;
       this.page_number = Math.min(this.page_number + 2, this.page_count - 1);
       this.forward_part_1();
     } else {
-      tmp = this.current.next();
+      this.current_tmp = this.current.next();
       this.page_number++;
-      if (tmp.length > 0) {
-        tmp.addClass('book__page_current');
-        this.current.removeClass('book__page_current');
-        this.current = tmp;
-      }
-      window.setTimeout(this.unblockButtons, this.time);
+      this.current_tmp.css({
+        'margin-left': '0',
+        'visibility': 'visible',
+        'z-index': 1
+      });
+      this.current.stop().animate({
+        'margin-left': '-100%'
+      }, {
+        'duration': this.time,
+        'complete': this.end_animation,
+        'easing': 'linear'
+      });
     }
     return this.buttonState();
+  };
+
+  book.prototype.end_animation = function() {
+    this.current.removeClass('book__page_current').removeAttr('style');
+    this.current = this.current_tmp;
+    this.current.addClass('book__page_current').removeAttr('style');
+    return this.clickable = true;
   };
 
   book.prototype.forward_part_1 = function() {
@@ -297,7 +305,6 @@ book = (function() {
   };
 
   book.prototype.movePrev = function() {
-    var tmp;
     if (!this.clickable) {
       return;
     }
@@ -320,13 +327,19 @@ book = (function() {
       this.prev_part_1();
     } else {
       this.page_number--;
-      tmp = this.current.prev();
-      if (tmp.length > 0) {
-        tmp.addClass('book__page_current');
-        this.current.removeClass('book__page_current');
-        this.current = tmp;
-      }
-      window.setTimeout(this.unblockButtons, this.time);
+      this.current_tmp = this.current.prev();
+      this.current_tmp.css({
+        'margin-left': '-100%',
+        'visibility': 'visible',
+        'z-index': 3
+      });
+      this.current_tmp.stop().animate({
+        'margin-left': '0'
+      }, {
+        'duration': this.time,
+        'complete': this.end_animation,
+        'easing': 'linear'
+      });
     }
     return this.buttonState();
   };
