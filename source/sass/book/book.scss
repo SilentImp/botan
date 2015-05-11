@@ -55,6 +55,7 @@
     border-style: none;
     background-repeat: no-repeat;
     transition: opacity .25s;
+    font-family: 'PF Din', sans-serif;
     &_disabled{
       opacity: 0;
       pointer-events: none;
@@ -118,7 +119,7 @@
 
     box-shadow: none;
     transform: none;
-    transition: transform .3s linear;
+    transition: transform .2s linear;
 
 
     &_left{
