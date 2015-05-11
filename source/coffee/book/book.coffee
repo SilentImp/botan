@@ -154,7 +154,7 @@ class book
     if Modernizr.mq('(min-width: '+@one_page_width+'px)') && @page_number >= @page_count-3
       return
 
-    if Modernizr.mq('(max-width: '+@one_page_width+'px) and (min-width: 801px)') && @page_number >= @page_count-2
+    if Modernizr.mq('(max-width: '+(@one_page_width-1)+'px) and (min-width: 801px)') && @page_number >= @page_count-1
       return
 
     if Modernizr.mq('(max-width: 800px)') && (@page_number >= @page_count-2)
