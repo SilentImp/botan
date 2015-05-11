@@ -205,6 +205,9 @@ book = (function() {
     }
     this.clickable = false;
     if (this.page_number === this.page_count - 1) {
+      if (Modernizr.mq('(max-width: 800px)')) {
+        this.current.addClass('book__page_current-last');
+      }
       return;
     }
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
