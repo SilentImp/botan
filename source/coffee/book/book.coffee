@@ -43,6 +43,7 @@ class book
         @desk = true
 
         empty = @book.find '.book__page_empty:first-child'
+        empty.removeClass 'book__page_left book__page_right book__page_current'
         if empty.length == 0
           @pages.prepend @empty
           @page_number++
@@ -80,6 +81,7 @@ class book
         empty = @book.find '.book__page_empty:first-child'
         if empty.length > 0
           @empty = empty.clone true
+          @empty.removeClass 'book__page_left book__page_right book__page_current'
           empty.remove()
           @page_number--
 
