@@ -100,6 +100,8 @@ book = (function() {
     }
     this.next.on('click', this.moveNext);
     this.prev.on('click', this.movePrev);
+    key('right', this.moveNext);
+    key('left', this.movePrev);
     $(window).on('resize', this.resizer);
   }
 
