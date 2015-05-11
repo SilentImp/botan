@@ -89,7 +89,7 @@ book = (function() {
     this.page_count = this.page.length;
     this.page_number = 0;
     this.clickable = true;
-    this.time = 200;
+    this.time = 300;
     this.buttonState();
     this.resizer();
     this.touch = $('html').hasClass('touch');
