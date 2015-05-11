@@ -84,15 +84,12 @@ book = (function() {
     this.prev = this.book.find('.book__prev');
     this.prev_text = this.prev.find('span');
     this.pages = this.book.find('.book__pages');
-    this.page = this.pages.find('.book__page');
     this.shadow = this.book.find('.shadow-left');
     this.one_page_width = 1240;
-    this.page_count = this.page.length;
     this.page_number = 0;
     this.clickable = true;
     this.desk = null;
     this.time = 300;
-    this.buttonState();
     this.resizer();
     this.touch = $('html').hasClass('touch');
     this.toucher = null;
@@ -107,33 +104,61 @@ book = (function() {
   }
 
   book.prototype.resizer = function() {
+    var empty;
     this.body.addClass('no-transitions');
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       if (this.desk === true) {
         return;
       }
       this.desk = true;
-      this.left = this.page.find('.book__page_current');
-      this.right = this.left.next();
+      empty = this.book.find('.book__page_empty:first-child');
+      if (empty.length === 0) {
+        this.pages.prepend(this.empty);
+        this.page_number++;
+      }
+      if ((this.page_number % 2) === 0) {
+        this.left = this.book.find('.book__page_current');
+        this.right = this.left.next();
+      } else {
+        this.right = this.book.find('.book__page_current');
+        this.left = this.right.prev();
+      }
+      this.page_number = this.page_number - (this.page_number % 2);
       if (this.left.length === 0) {
-        this.left = $(this.page.get(0));
-        this.right = $(this.page.get(1));
+        this.left = this.book.find('.book__page:eq(0)');
+        this.right = this.book.find('.book__page:eq(1)');
+        this.page_number = 0;
       }
       this.left.addClass('book__page_left');
       this.right.addClass('book__page_right');
-      this.page.find('.book__page_current').removeClass('book__page_current');
+      if (this.page_number > 0) {
+        this.shadow.addClass('shadow-left_open');
+      } else {
+        this.shadow.removeClass('shadow-left_open');
+      }
+      this.book.find('.book__page_current').removeClass('book__page_current');
     } else {
       if (this.desk === false) {
         return;
       }
       this.desk = false;
-      this.current = this.page.find('.book__page_left');
+      empty = this.book.find('.book__page_empty:first-child');
+      if (empty.length > 0) {
+        this.empty = empty.clone(true);
+        empty.remove();
+        this.page_number--;
+      }
+      this.current = this.book.find('.book__page_left');
       if (this.current.length === 0) {
-        this.current = $(this.page.get(0));
+        this.current = this.book.find('.book__page:eq(0)');
+        this.page_number = 0;
       }
       this.current.addClass('book__page_current');
-      this.page.find('.book__page_left, .book__page_left-prev, .book__page_left-old, .book__page_left-new, .book__page_right, .book__page_right-old, .book__page_right-prev').removeClass('book__page_left book__page_left-prev book__page_left-old book__page_left-new book__page_right book__page_right-old book__page_right-prev');
+      this.book.find('.book__page_left, .book__page_left-prev, .book__page_left-old, .book__page_left-new, .book__page_right, .book__page_right-old, .book__page_right-prev').removeClass('book__page_left book__page_left-prev book__page_left-old book__page_left-new book__page_right book__page_right-old book__page_right-prev');
     }
+    this.page = this.book.find('.book__page');
+    this.page_count = this.page.length;
+    this.buttonState();
     return window.setTimeout((function(_this) {
       return function() {
         return _this.body.removeClass('no-transitions');
@@ -162,10 +187,11 @@ book = (function() {
     } else {
       this.next.toggleClass('book__next_disabled', false);
     }
-    this.prev_text.text(NumberToWords(this.page_number - 1));
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
-      return this.next_text.text(NumberToWords(this.page_number + 2));
+      this.prev_text.text(NumberToWords(this.page_number - 2));
+      return this.next_text.text(NumberToWords(this.page_number + 1));
     } else {
+      this.prev_text.text(NumberToWords(this.page_number - 1));
       return this.next_text.text(NumberToWords(this.page_number + 1));
     }
   };
