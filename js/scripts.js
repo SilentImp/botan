@@ -202,7 +202,7 @@ book = (function() {
     if (!this.clickable) {
       return;
     }
-    if (this.page_number === this.page_count - 1) {
+    if (this.page_number >= this.page_count - 3) {
       if (Modernizr.mq('(max-width: 800px)')) {
         this.clickable = false;
         this.book.addClass('book_last');
