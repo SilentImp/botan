@@ -110,6 +110,7 @@ book = (function() {
       if (this.desk === false || this.desk === null) {
         this.desk = true;
         empty = this.book.find('.book__page_empty:first-child');
+        empty.removeClass('book__page_left book__page_right book__page_current');
         if (empty.length === 0) {
           this.pages.prepend(this.empty);
           this.page_number++;
@@ -143,6 +144,7 @@ book = (function() {
         empty = this.book.find('.book__page_empty:first-child');
         if (empty.length > 0) {
           this.empty = empty.clone(true);
+          this.empty.removeClass('book__page_left book__page_right book__page_current');
           empty.remove();
           this.page_number--;
         }
