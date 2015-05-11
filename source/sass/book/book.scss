@@ -5,7 +5,6 @@
   max-width: 941px;
   width: 73.515625vw;
   margin: auto;
-  border: 1px solid $black;
   text-align: left;
 
   position: fixed;
@@ -13,23 +12,33 @@
   left: 0;
   right: 0;
   margin: -281px auto auto;
-
-  &:before{
-    content: "";
+  .shadow-left{
     display: block;
     overflow: hidden;
     position: absolute;
     top: 100%;
+    margin-top: -1px;
+    z-index: -1;
     left: 0;
-    width: 50%;
+    width: 470px;
     height: 20px;
-    background: url('../images/shadow-left.png') 0 100% no-repeat;
-    background-size: auto 20px;
+    &__wrapper{
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 20px;
+      width: 0;
+      background: url('../images/shadow-left.png') 100% 100% no-repeat;
+      background-size: 100% 20px;
+      opacity: 0;
+      }
     }
   &:after{
     content: "";
     display: block;
     overflow: hidden;
+    margin-top: -1px;
+    z-index: -1;
     position: absolute;
     top: 100%;
     right: 0;
@@ -40,6 +49,7 @@
     }
   &__prev,
   &__next{
+    border-style: none;
     cursor: pointer;
     display: block;
     z-index: 2;
@@ -52,7 +62,6 @@
     letter-spacing: 2px;
     padding: 20px 0 0;
     background: none;
-    border-style: none;
     background-repeat: no-repeat;
     transition: opacity .25s;
     font-family: 'PF Din', sans-serif;
@@ -97,89 +106,46 @@
       }
     }
   &__page{
+
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
-    height: 100%;
-    z-index: -1;
+
     visibility: hidden;
-    zoom: 1;
+    pointer-events: none;
+
     background-color: $white;
-    line-height: 70vh;
-    vertical-align: top;
-    display: inline-block;
-    padding: 0 7.8125vw;
+    line-height: 560px;
+    width: 470px;
+    height: 560px;
+
+    padding: 0 100px;
     overflow: hidden;
     box-sizing: border-box;
     white-space: normal;
     user-select: text;
 
-    will-change: transform;
+    border: 1px solid $third-black;
+    border-left-style: none;
 
-    box-shadow: none;
-    transform: none;
-    transition: transform .2s linear;
-
+    transform: translateZ(0);
+    zoom: 1;
 
     &_left{
-      left: 0;
+      pointer-events: all;
       z-index: 6;
-      transform: translateX(0);
       visibility: visible;
-      & + .book__page + .book__page{
-        transform: translateX(100%);
-        visibility: visible;
-        }
-      &-new.book__page.book__page{
-        transform: translateX(0);
-        z-index: 5;
-        visibility: visible;
-        }
-      &-prev{
-        transform: translateX(50%);
-        visibility: visible;
-        z-index: 7;
-        }
-      &-old{
-        z-index: 1;
-        }
+      border-right-style: none;
+      border-left-style: solid;
       }
 
     &_right{
-      left: 50%;
+      pointer-events: all;
+      margin-left: 50%;
       z-index: 8;
-      transform: translateX(0);
       visibility: visible;
-      &-old{
-        transform: translateX(-100%);
-        visibility: visible;
-        z-index: 3;
-        }
-      & + .book__page + .book__page{
-        left: 50%;
-        z-index: 2;
-        visibility: visible;
-        }
-      &-prev{
-        left: 50%;
-        transform: translateX(-100%);
-        visibility: visible;
-        z-index: 4;
-        transition: none;
-        &-placed{
-          left: 50%;
-          transform: translateX(0%);
-          visibility: visible;
-          z-index: 4;
-          & + .book__page + .book__page{
-            z-index: 3;
-            }
-          }
-        & + .book__page + .book__page{
-          z-index: 3;
-          }
-        }
+      border-right-style: solid;
+      border-left-style: none;
       }
 
     &_inverse{
@@ -187,6 +153,9 @@
       .book__content{
         color: $white;
         }
+      }
+    &_empty{
+      border-style: none !important;
       }
     &_green{
       background-color: $green;
@@ -247,8 +216,8 @@
         width: 100%;
         height: 100%;
         padding: 0;
-        max-width: initial;
-        max-height: initial;
+        max-width: none;
+        max-height: none;
         overflow: hidden;
         img{
           width: 100%;
@@ -279,15 +248,13 @@
         font-size: 0;
         line-height: 0;
         overflow: hidden;
+        width: auto;
         img{
           display: inline-block;
           vertical-align: middle;
           max-width: 100%;
           }
         }
-      }
-    &:first-child{
-      border-left-style: none;
       }
     }
   &__content{
@@ -300,8 +267,8 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
-    max-width: 100%;
-    max-height: calc(100% - 44px);
+    box-sizing: border-box;
+    max-height: 516px;
     figure{
       img{
         margin: 0 0 88px;
@@ -319,64 +286,39 @@
     }
   }
 
-@media screen and (min-height: 800px) {
-  html>body .book{
-    &__page{
-      line-height: 560px;
-      }
-    }
-  }
-
-@media screen and (min-width: 1280px) {
-  html>body .book{
-    &__page{
-      padding: 0 100px;
-      &_title{
-        padding: 0;
-        }
-      &_full-cover,
-      &_cover{
-        padding: 0 20px;
-        }
-      }
-    }
-  }
 
 @media screen and (max-width: 1240px) {
   html>body .book{
     width: 470px;
-    &:before{
-      width: 100%;
+    &_first{
+      animation: debonce .4s ease-in-out 1;
       }
-    &:after{
+    &_last{
+      animation: bonce .4s ease-in-out 1;
+      }
+    .shadow-left{
       display: none;
       }
+    &:after{
+      width: 100%;
+      }
     &__pages{
-      overflow: hidden;
+      border-left: 1px solid $third-black;
       &:before{
         display: none;
         }
       }
     &__page{
-      visibility: hidden;
       width: 100%;
       padding: 0 100px;
-      transform: translateX(-100%);
-      z-index: 5;
-
+      margin-left: -100%;
+      z-index: 1;
+      visibility: hidden;
+      border-left-style:none;
       &_current{
-        transform: translateX(0);
-        z-index: 4;
         visibility: visible;
-
-        & + .book__page.book__page{
-          z-index: 3;
-          visibility: visible;
-          }
-        & ~ .book__page{
-          transform: translateX(0);
-          z-index: 2;
-          }
+        margin-left: 0;
+        z-index: 2;
         }
       &_title{
         padding: 0;
@@ -414,30 +356,43 @@
 
 @media screen and (max-width: 472px) {
   html>body{
-    &>header{
-      .video{
-        font-style: 0;
-        line-height: 0;
-        text-indent: -999px;
-        &:before{
-          position: absolute;
-          top: 0;
-          left: 0;
-          }
-        }
-      }
     .book{
       width: 100%;
-      border-style: none;
       vertical-align: top;
+      border-style: none;
       &:after,
       &:before{
         display: none;
         }
+      &__pages{
+        border-left: none;
+        &:after,
+        &:before{
+          display: none;
+          }
+        }
       &__page{
+        border-style: none;
         width: 100%;
         padding: 0 20px;
+        &_title{
+          padding: 0;
+          }
         }
       }
     }
   }
+
+
+
+@keyframes bonce {
+  50% {
+    transform: translateX(-20%);
+  }
+}
+
+@keyframes debonce {
+  50% {
+    transform: translateX(20%);
+  }
+}

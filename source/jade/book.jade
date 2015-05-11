@@ -2,11 +2,12 @@ extends ../partials/layout.jade
 
 block content
   section.book
-    .book__pages
-    
+    .shadow-left
+      .shadow-left__wrapper
       
-      .book__page
-        .book__content
+    .book__pages
+      
+      .book__page.book__page_empty
     
       .book__page.book__page_title
         .book__content
@@ -78,6 +79,7 @@ block content
       .book__page.book__page_full-cover
         .book__content
           img(src="images/picture-1.jpg", alt="Иллюстрация")
+
 
     menu.book__navigation
       button.book__prev.book__prev_disabled(type="button") 
