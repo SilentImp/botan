@@ -113,19 +113,26 @@ book = (function() {
         return;
       }
       this.desk = true;
-      this.page.removeClass('book__page_current');
-      this.left = $(this.page.get(0));
-      this.right = $(this.page.get(1));
+      this.left = this.page.find('.book__page_current');
+      this.right = this.left.next();
+      if (this.left.length === 0) {
+        this.left = $(this.page.get(0));
+        this.right = $(this.page.get(1));
+      }
       this.left.addClass('book__page_left');
       this.right.addClass('book__page_right');
+      this.page.find('.book__page_current').removeClass('book__page_current');
     } else {
       if (this.desk === false) {
         return;
       }
       this.desk = false;
-      this.page.removeClass('book__page_left book__page_right');
-      this.current = $(this.page.get(0));
+      this.current = this.page.find('.book__page_left');
+      if (this.current.length === 0) {
+        this.current = $(this.page.get(0));
+      }
       this.current.addClass('book__page_current');
+      this.page.find('.book__page_left, .book__page_left-prev, .book__page_left-old, .book__page_left-new, .book__page_right, .book__page_right-old, .book__page_right-prev').removeClass('book__page_left book__page_left-prev book__page_left-old book__page_left-new book__page_right book__page_right-old book__page_right-prev');
     }
     return window.setTimeout((function(_this) {
       return function() {
