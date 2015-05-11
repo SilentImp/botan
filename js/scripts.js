@@ -61,12 +61,10 @@ var book,
 book = (function() {
   function book() {
     this.prev_part_5 = bind(this.prev_part_5, this);
-    this.prev_part_4 = bind(this.prev_part_4, this);
     this.prev_part_3 = bind(this.prev_part_3, this);
     this.prev_part_2 = bind(this.prev_part_2, this);
     this.prev_part_1 = bind(this.prev_part_1, this);
     this.movePrev = bind(this.movePrev, this);
-    this.forward_part_4 = bind(this.forward_part_4, this);
     this.forward_part_3 = bind(this.forward_part_3, this);
     this.forward_part_2 = bind(this.forward_part_2, this);
     this.forward_part_1 = bind(this.forward_part_1, this);
@@ -84,12 +82,12 @@ book = (function() {
     this.prev = this.book.find('.book__prev');
     this.prev_text = this.prev.find('span');
     this.pages = this.book.find('.book__pages');
-    this.shadow = this.book.find('.shadow-left');
+    this.shadow = this.book.find('.shadow-left__wrapper');
     this.one_page_width = 1240;
     this.page_number = 0;
     this.clickable = true;
     this.desk = null;
-    this.time = 300;
+    this.time = 200;
     this.resizer();
     this.touch = $('html').hasClass('touch');
     this.toucher = null;
@@ -109,7 +107,7 @@ book = (function() {
     var empty;
     this.body.addClass('no-transitions');
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
-      if (this.desk === true || this.desk === null) {
+      if (this.desk === false || this.desk === null) {
         this.desk = true;
         empty = this.book.find('.book__page_empty:first-child');
         if (empty.length === 0) {
@@ -218,9 +216,6 @@ book = (function() {
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.clickable = false;
       this.page_number = Math.min(this.page_number + 2, this.page_count - 1);
-      if (this.page_number > 0) {
-        this.shadow.addClass('shadow-left_open');
-      }
       this.forward_part_1();
     } else {
       tmp = this.current.next();
@@ -237,47 +232,68 @@ book = (function() {
 
   book.prototype.forward_part_1 = function() {
     this.right_tmp = this.right.next().next();
-    this.part_one_flag = true;
-    window.setTimeout(this.forward_part_2, this.time);
-    return this.right.addClass('book__page_right-old');
+    if (this.right_tmp.length === 1) {
+      this.right_tmp.css({
+        'margin-left': '50%',
+        'visibility': 'visible',
+        'z-index:': 1,
+        'border-left-style': 'none',
+        'border-right-style': 'solid'
+      });
+    }
+    this.left.css({
+      'z-index': 3,
+      'visibility': 'visible'
+    });
+    return this.right.css({
+      'z-index': 2
+    }).stop().animate({
+      'margin-left': 0
+    }, {
+      'duration': this.time,
+      'complete': this.forward_part_2,
+      'easing': 'linear'
+    });
   };
 
   book.prototype.forward_part_2 = function() {
-    if (!this.part_one_flag) {
-      return;
+    this.right.removeClass('book__page_right').removeAttr('style');
+    this.right = this.right_tmp;
+    this.right.addClass('book__page_right').removeAttr('style');
+    this.left.css({
+      'z-index': 1
+    });
+    if (this.page_number > 0) {
+      this.shadow.stop().animate({
+        'width': '100%',
+        'opacity': 1
+      }, {
+        'duration': this.time,
+        'easing': 'linear'
+      });
     }
-    this.part_one_flag = false;
-    this.right.removeClass('book__page_right-old book__page_right');
-    if (this.right_tmp.length === 1) {
-      this.right_tmp.addClass('book__page_right');
-      this.right = this.right_tmp;
-    } else {
-      this.right = null;
-    }
-    return this.forward_part_3();
+    this.left_tmp = this.left.next().next();
+    this.left_tmp.css({
+      'z-index': 2,
+      'margin-left': '50%',
+      'visibility': 'visible',
+      'border-left-style': 'solid',
+      'border-right-style': 'none'
+    });
+    return this.left_tmp.stop().animate({
+      'margin-left': '0'
+    }, {
+      'duration': this.time,
+      'complete': this.forward_part_3,
+      'easing': 'linear'
+    });
   };
 
   book.prototype.forward_part_3 = function() {
-    this.left_tmp = this.left.next().next();
-    this.part_three_flag = true;
-    window.setTimeout(this.forward_part_4, this.time);
-    this.left.addClass('book__page_left-old');
-    return this.left_tmp.addClass('book__page_left-new');
-  };
-
-  book.prototype.forward_part_4 = function() {
-    if (!this.part_three_flag) {
-      return;
-    }
-    this.part_three_flag = false;
-    this.left.removeClass('book__page_left-old book__page_left');
+    this.left.removeClass('book__page_left').removeAttr('style');
     this.left = this.left_tmp;
-    this.left.addClass('book__page_left').removeClass('book__page_left-new');
-    return window.setTimeout((function(_this) {
-      return function() {
-        return _this.clickable = true;
-      };
-    })(this), 0);
+    this.left.addClass('book__page_left').removeAttr('style');
+    return this.clickable = true;
   };
 
   book.prototype.movePrev = function() {
@@ -301,9 +317,6 @@ book = (function() {
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.clickable = false;
       this.page_number = Math.max(this.page_number - 2, 0);
-      if (this.page_number === 0) {
-        this.shadow.removeClass('shadow-left_open');
-      }
       this.prev_part_1();
     } else {
       this.page_number--;
@@ -320,32 +333,68 @@ book = (function() {
 
   book.prototype.prev_part_1 = function() {
     this.left_tmp = this.left.prev().prev();
-    this.part_one_flag = true;
-    window.setTimeout(this.prev_part_2, this.time);
-    this.left.addClass('book__page_left-prev').removeClass('book__page_left');
-    return this.left_tmp.addClass('book__page_left');
+    this.left_tmp.css({
+      'z-index': 1,
+      'visibility': 'visible',
+      'margin-left': 0,
+      'border-left-style': 'solid',
+      'border-right-style': 'none'
+    });
+    this.right.css({
+      'z-index': 3
+    });
+    if (this.page_number === 0) {
+      this.shadow.stop().animate({
+        'width': 0,
+        'opacity': 0
+      }, {
+        'duration': this.time,
+        'easing': 'linear'
+      });
+    }
+    return this.left.css({
+      'z-index': 2
+    }).stop().animate({
+      'margin-left': '50%'
+    }, {
+      'duration': this.time,
+      'complete': this.prev_part_2,
+      'easing': 'linear'
+    });
   };
 
   book.prototype.prev_part_2 = function() {
-    if (!this.part_one_flag) {
-      return;
-    }
-    this.part_one_flag = false;
-    this.left.removeClass('book__page_left-prev');
+    this.left.removeClass('book__page_left').removeAttr('style');
     this.left = this.left_tmp;
-    return this.prev_part_3();
+    this.left.addClass('book__page_left').removeAttr('style');
+    this.left.css({
+      'z-index': 3
+    });
+    this.right.css({
+      'z-index': 1
+    });
+    this.right_tmp = this.right.prev().prev();
+    this.right_tmp.css({
+      'z-index': 2,
+      'margin-left': '0',
+      'visibility': 'visible',
+      'border-left-style': 'none',
+      'border-right-style': 'solid'
+    });
+    return this.right_tmp.stop().animate({
+      'margin-left': '50%'
+    }, {
+      'duration': this.time,
+      'complete': this.prev_part_3,
+      'easing': 'linear'
+    });
   };
 
   book.prototype.prev_part_3 = function() {
-    this.right_tmp = this.right.prev().prev();
-    this.right_tmp.addClass('book__page_right-prev');
-    return window.setTimeout(this.prev_part_4, 0);
-  };
-
-  book.prototype.prev_part_4 = function() {
-    this.right_tmp.addClass('book__page_right-prev-placed').removeClass('book__page_right-prev');
-    this.part_five_flag = true;
-    return window.setTimeout(this.prev_part_5, this.time);
+    this.right.removeClass('book__page_right').removeAttr('style');
+    this.right = this.right_tmp;
+    this.right.addClass('book__page_right').removeAttr('style');
+    return this.clickable = true;
   };
 
   book.prototype.prev_part_5 = function() {
