@@ -90,6 +90,7 @@ book = (function() {
     this.page_count = this.page.length;
     this.page_number = 0;
     this.clickable = true;
+    this.desk = null;
     this.time = 300;
     this.buttonState();
     this.resizer();
@@ -108,12 +109,20 @@ book = (function() {
   book.prototype.resizer = function() {
     this.body.addClass('no-transitions');
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
+      if (this.desk === true) {
+        return;
+      }
+      this.desk = true;
       this.page.removeClass('book__page_current');
       this.left = $(this.page.get(0));
       this.right = $(this.page.get(1));
       this.left.addClass('book__page_left');
       this.right.addClass('book__page_right');
     } else {
+      if (this.desk === false) {
+        return;
+      }
+      this.desk = false;
       this.page.removeClass('book__page_left book__page_right');
       this.current = $(this.page.get(0));
       this.current.addClass('book__page_current');
