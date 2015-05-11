@@ -194,7 +194,6 @@ book = (function() {
   };
 
   book.prototype.moveNext = function() {
-    console.log(this.page_number);
     if (!this.clickable) {
       return;
     }
@@ -315,7 +314,6 @@ book = (function() {
     if (!this.clickable) {
       return;
     }
-    console.log(this.page_number);
     if (Modernizr.mq('(max-width: 800px)') && (this.page_number === 0)) {
       this.clickable = false;
       this.book.addClass('book_first');
