@@ -16,7 +16,7 @@ class book
     @page_count = @page.length
     @page_number = 0
     @clickable = true
-    @time = 400
+    @time = 200
 
     @buttonState()
     @resizer()
