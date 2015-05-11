@@ -200,10 +200,10 @@ book = (function() {
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)') && this.page_number >= this.page_count - 3) {
       return;
     }
-    if (Modernizr.mq('(max-width: ' + this.one_page_width + 'px) and (min-width: 801px)') && this.page_number >= this.page_count - 1) {
+    if (Modernizr.mq('(max-width: ' + (this.one_page_width - 1) + 'px) and (min-width: 801px)') && this.page_number >= this.page_count - 1) {
       return;
     }
-    if (Modernizr.mq('(max-width: 800px)') && (this.page_number >= this.page_count - 2)) {
+    if (Modernizr.mq('(max-width: 800px)') && (this.page_number >= this.page_count - 1)) {
       this.clickable = false;
       this.book.addClass('book_last');
       setTimeout((function(_this) {
