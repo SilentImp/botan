@@ -146,17 +146,24 @@ class book
 
 
   moveNext: =>
+
+
     if !@clickable
       return
 
-    if @page_number >= @page_count-3
-      if Modernizr.mq '(max-width: 800px)'
-        @clickable = false
-        @book.addClass 'book_last'
-        setTimeout =>
-            @book.removeClass 'book_last'
-            @clickable = true
-          , 400
+    if Modernizr.mq('(min-width: '+@one_page_width+'px)') && @page_number >= @page_count-3
+      return
+
+    if Modernizr.mq('(max-width: '+@one_page_width+'px) and (min-width: 801px)') && @page_number >= @page_count-2
+      return
+
+    if Modernizr.mq('(max-width: 800px)') && (@page_number >= @page_count-2)
+      @clickable = false
+      @book.addClass 'book_last'
+      setTimeout =>
+          @book.removeClass 'book_last'
+          @clickable = true
+        , 400
       return
 
     @clickable = false
@@ -254,22 +261,28 @@ class book
 
 
   movePrev: =>
+
     if !@clickable
       return
 
-    if @page_number == 0
-      if Modernizr.mq '(max-width: 800px)'
-        @clickable = false
-        @book.addClass 'book_first'
-        setTimeout =>
-            @book.removeClass 'book_first'
-            @clickable = true
-          , 400
-      return
-    if Modernizr.mq '(min-width: '+@one_page_width+'px)'
+    if Modernizr.mq('(max-width: 800px)')&&(@page_number == 0)
       @clickable = false
+      @book.addClass 'book_first'
+      setTimeout =>
+          @book.removeClass 'book_first'
+          @clickable = true
+        , 400
+
+    if @page_number == 0
+      return
+
+    @clickable = false
+
+    if Modernizr.mq '(min-width: '+@one_page_width+'px)'
+
       @page_number = Math.max @page_number-2, 0
       @prev_part_1()
+
     else
       @page_number--
       @current_tmp = @current.prev()
