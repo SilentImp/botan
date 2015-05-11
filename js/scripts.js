@@ -60,6 +60,11 @@ var book,
 
 book = (function() {
   function book() {
+    this.prev_part_5 = bind(this.prev_part_5, this);
+    this.prev_part_4 = bind(this.prev_part_4, this);
+    this.prev_part_3 = bind(this.prev_part_3, this);
+    this.prev_part_2 = bind(this.prev_part_2, this);
+    this.prev_part_1 = bind(this.prev_part_1, this);
     this.movePrev = bind(this.movePrev, this);
     this.forward_part_4 = bind(this.forward_part_4, this);
     this.forward_part_3 = bind(this.forward_part_3, this);
@@ -229,6 +234,7 @@ book = (function() {
     }
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.page_number = Math.max(this.page_number - 2, 0);
+      this.prev_part_1();
     } else {
       this.page_number--;
       tmp = this.current.prev();
@@ -240,6 +246,51 @@ book = (function() {
       window.setTimeout(this.unblockButtons, this.time);
     }
     return this.buttonState();
+  };
+
+  book.prototype.prev_part_1 = function() {
+    this.left_tmp = this.left.prev().prev();
+    this.part_one_flag = true;
+    window.setTimeout(this.prev_part_2, this.time);
+    this.left.addClass('book__page_left-prev').removeClass('book__page_left');
+    return this.left_tmp.addClass('book__page_left');
+  };
+
+  book.prototype.prev_part_2 = function() {
+    if (!this.part_one_flag) {
+      return;
+    }
+    this.part_one_flag = false;
+    this.left.removeClass('book__page_left-prev');
+    this.left = this.left_tmp;
+    return this.prev_part_3();
+  };
+
+  book.prototype.prev_part_3 = function() {
+    this.right_tmp = this.right.prev().prev();
+    this.right_tmp.addClass('book__page_right-prev');
+    return window.setTimeout(this.prev_part_4, 0);
+  };
+
+  book.prototype.prev_part_4 = function() {
+    this.right_tmp.addClass('book__page_right-prev-placed').removeClass('book__page_right-prev');
+    this.part_five_flag = true;
+    return window.setTimeout(this.prev_part_5, this.time);
+  };
+
+  book.prototype.prev_part_5 = function() {
+    if (!this.part_five_flag) {
+      return;
+    }
+    this.part_five_flag = false;
+    this.right_tmp.removeClass('book__page_right-prev-placed').addClass('book__page_right');
+    this.right.removeClass('book__page_right');
+    this.right = this.right_tmp;
+    return window.setTimeout((function(_this) {
+      return function() {
+        return _this.clickable = true;
+      };
+    })(this), 0);
   };
 
   return book;
