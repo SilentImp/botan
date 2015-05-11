@@ -109,54 +109,53 @@ book = (function() {
     var empty;
     this.body.addClass('no-transitions');
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
-      if (this.desk === true) {
-        return;
+      if (this.desk === true || this.desk === null) {
+        this.desk = true;
+        empty = this.book.find('.book__page_empty:first-child');
+        if (empty.length === 0) {
+          this.pages.prepend(this.empty);
+          this.page_number++;
+        }
+        if ((this.page_number % 2) === 0) {
+          this.left = this.book.find('.book__page_current');
+          this.right = this.left.next();
+        } else {
+          this.right = this.book.find('.book__page_current');
+          this.left = this.right.prev();
+        }
+        this.page_number = this.page_number - (this.page_number % 2);
+        if (this.left.length === 0) {
+          this.left = this.book.find('.book__page:eq(0)');
+          this.right = this.book.find('.book__page:eq(1)');
+          this.page_number = 0;
+        }
+        this.left.addClass('book__page_left');
+        this.right.addClass('book__page_right');
+        if (this.page_number > 0) {
+          this.shadow.addClass('shadow-left_open');
+        } else {
+          this.shadow.removeClass('shadow-left_open');
+        }
+        this.book.find('.book__page_current').removeClass('book__page_current');
       }
-      this.desk = true;
-      empty = this.book.find('.book__page_empty:first-child');
-      if (empty.length === 0) {
-        this.pages.prepend(this.empty);
-        this.page_number++;
-      }
-      if ((this.page_number % 2) === 0) {
-        this.left = this.book.find('.book__page_current');
-        this.right = this.left.next();
-      } else {
-        this.right = this.book.find('.book__page_current');
-        this.left = this.right.prev();
-      }
-      this.page_number = this.page_number - (this.page_number % 2);
-      if (this.left.length === 0) {
-        this.left = this.book.find('.book__page:eq(0)');
-        this.right = this.book.find('.book__page:eq(1)');
-        this.page_number = 0;
-      }
-      this.left.addClass('book__page_left');
-      this.right.addClass('book__page_right');
-      if (this.page_number > 0) {
-        this.shadow.addClass('shadow-left_open');
-      } else {
-        this.shadow.removeClass('shadow-left_open');
-      }
-      this.book.find('.book__page_current').removeClass('book__page_current');
     } else {
-      if (this.desk === false) {
-        return;
+      if (this.desk === true || this.desk === null) {
+        this.desk = false;
+        this.clickable = true;
+        empty = this.book.find('.book__page_empty:first-child');
+        if (empty.length > 0) {
+          this.empty = empty.clone(true);
+          empty.remove();
+          this.page_number--;
+        }
+        this.current = this.book.find('.book__page_left');
+        if (this.current.length === 0) {
+          this.current = this.book.find('.book__page:eq(0)');
+          this.page_number = 0;
+        }
+        this.current.addClass('book__page_current');
+        this.book.find('.book__page_left, .book__page_left-prev, .book__page_left-old, .book__page_left-new, .book__page_right, .book__page_right-old, .book__page_right-prev').removeClass('book__page_left book__page_left-prev book__page_left-old book__page_left-new book__page_right book__page_right-old book__page_right-prev');
       }
-      this.desk = false;
-      empty = this.book.find('.book__page_empty:first-child');
-      if (empty.length > 0) {
-        this.empty = empty.clone(true);
-        empty.remove();
-        this.page_number--;
-      }
-      this.current = this.book.find('.book__page_left');
-      if (this.current.length === 0) {
-        this.current = this.book.find('.book__page:eq(0)');
-        this.page_number = 0;
-      }
-      this.current.addClass('book__page_current');
-      this.book.find('.book__page_left, .book__page_left-prev, .book__page_left-old, .book__page_left-new, .book__page_right, .book__page_right-old, .book__page_right-prev').removeClass('book__page_left book__page_left-prev book__page_left-old book__page_left-new book__page_right book__page_right-old book__page_right-prev');
     }
     this.page = this.book.find('.book__page');
     this.page_count = this.page.length;
@@ -165,7 +164,7 @@ book = (function() {
       return function() {
         return _this.body.removeClass('no-transitions');
       };
-    })(this), 300);
+    })(this), 600);
   };
 
   book.prototype.unblockButtons = function() {
@@ -212,12 +211,12 @@ book = (function() {
             _this.book.removeClass('book_last');
             return _this.clickable = true;
           };
-        })(this), 600);
+        })(this), 400);
       }
       return;
     }
-    this.clickable = false;
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
+      this.clickable = false;
       this.page_number = Math.min(this.page_number + 2, this.page_count - 1);
       if (this.page_number > 0) {
         this.shadow.addClass('shadow-left_open');
@@ -295,12 +294,12 @@ book = (function() {
             _this.book.removeClass('book_first');
             return _this.clickable = true;
           };
-        })(this), 600);
+        })(this), 400);
       }
       return;
     }
-    this.clickable = false;
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
+      this.clickable = false;
       this.page_number = Math.max(this.page_number - 2, 0);
       if (this.page_number === 0) {
         this.shadow.removeClass('shadow-left_open');
