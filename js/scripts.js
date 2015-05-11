@@ -85,6 +85,7 @@ book = (function() {
     this.prev_text = this.prev.find('span');
     this.pages = this.book.find('.book__pages');
     this.page = this.pages.find('.book__page');
+    this.shadow = this.book.find('.shadow-left');
     this.one_page_width = 1240;
     this.page_count = this.page.length;
     this.page_number = 0;
@@ -164,6 +165,9 @@ book = (function() {
     }
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.page_number = Math.min(this.page_number + 2, this.page_count - 1);
+      if (this.page_number > 0) {
+        this.shadow.addClass('shadow-left_open');
+      }
       this.forward_part_1();
     } else {
       tmp = this.current.next();
@@ -234,6 +238,9 @@ book = (function() {
     }
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.page_number = Math.max(this.page_number - 2, 0);
+      if (this.page_number === 0) {
+        this.shadow.removeClass('shadow-left_open');
+      }
       this.prev_part_1();
     } else {
       this.page_number--;
