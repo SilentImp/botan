@@ -203,13 +203,20 @@ book = (function() {
     if (!this.clickable) {
       return;
     }
-    this.clickable = false;
     if (this.page_number === this.page_count - 1) {
       if (Modernizr.mq('(max-width: 800px)')) {
-        this.current.addClass('book__page_current-last');
+        this.clickable = false;
+        this.book.addClass('book_last');
+        setTimeout((function(_this) {
+          return function() {
+            _this.book.removeClass('book_last');
+            return _this.clickable = true;
+          };
+        })(this), 600);
       }
       return;
     }
+    this.clickable = false;
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.page_number = Math.min(this.page_number + 2, this.page_count - 1);
       if (this.page_number > 0) {
@@ -279,10 +286,20 @@ book = (function() {
     if (!this.clickable) {
       return;
     }
-    this.clickable = false;
     if (this.page_number === 0) {
+      if (Modernizr.mq('(max-width: 800px)')) {
+        this.clickable = false;
+        this.book.addClass('book_first');
+        setTimeout((function(_this) {
+          return function() {
+            _this.book.removeClass('book_first');
+            return _this.clickable = true;
+          };
+        })(this), 600);
+      }
       return;
     }
+    this.clickable = false;
     if (Modernizr.mq('(min-width: ' + this.one_page_width + 'px)')) {
       this.page_number = Math.max(this.page_number - 2, 0);
       if (this.page_number === 0) {
