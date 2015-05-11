@@ -1,14 +1,22 @@
 @import '../helper/helper';
 
 html{
+  height: 100%;
   body{
     font-family: Times, 'Times New Roman', sans-serif;
     min-height: 770px;
+    height: 100vh;
+    box-sizing: border-box;
     padding: 0 0 30px;
-    line-height: calc(100vh - 70px);
+    /* line-height: calc(100vh - 70px); */
     text-align: center;
-    position: relative;
     user-select: none;
+    position: relative;
+
+    &.no-transitions *{
+      transition: none !important;
+    }
+
     &>header{
       position: relative;
       height: 40px;

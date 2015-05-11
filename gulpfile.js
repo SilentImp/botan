@@ -117,7 +117,7 @@ gulp.task('js', function() {
   return gulp.src([dirs.source.coffee, dirs.source.js])
     .pipe(plumber())
     .pipe(gulpif(/[.]coffee$/, coffee({bare: true})))
-    .pipe(order(['number_to_words.js']))
+    .pipe(order(['number_to_words.js','transition_event.js']))
     .pipe(concat("scripts.js"))
     .pipe(gulp.dest(dirs.build.js));
 });
