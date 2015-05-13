@@ -8,10 +8,11 @@ html{
     height: 100vh;
     box-sizing: border-box;
     padding: 0 0 30px;
-    /* line-height: calc(100vh - 70px); */
     text-align: center;
     user-select: none;
     position: relative;
+
+    overflow-x: hidden;
 
     &.no-transitions *{
       transition: none !important;
@@ -36,6 +37,7 @@ html{
         font-family: 'PF Din', sans-serif;
         }
       .video{
+        z-index: 20;
         position: absolute;
         left: 0;
         top: 0;
@@ -45,8 +47,9 @@ html{
         text-transform: uppercase;
         line-height: 40px;
         font-size: 10px;
-        &:before{
-          content:"";
+        transition: color .25s;
+        span{
+          transition: background .25s;
           display: inline-block;
           vertical-align: top;
           width: 40px;

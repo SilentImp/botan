@@ -1,0 +1,217 @@
+@import '../helper/helper';
+
+html.no-mix-blend-mode>body .information{
+  &__map{
+    background: $dark-green url('../images/map.jpg') 50% 50% no-repeat;
+    background-size: cover;
+    &:after{
+      display: none;
+      }
+    }
+  }
+
+html>body.info__popup{
+  &>header .video{
+    z-index: 20;
+    color: $white;
+    span{
+      background-image: url('../svg/cinema-black.svg');
+      background-color: $white;
+      }
+    }
+  .information{
+    transition: left .25s .1s linear;
+    left: 0;
+    &__close{
+      right: 0;
+      transition: right .1s 0s linear;
+      }
+    &__lightbox{
+      display: block;
+      }
+    }
+  }
+
+.information{
+  position: absolute;
+
+  top: 0;
+  left: 100%;
+
+  width: 100%;
+  width: 100vw;
+
+
+  min-height: 340px;
+  line-height: 340px;
+
+  height: 66.25vh;
+  line-height: 66.25vh;
+
+  background-color: $black;
+  text-align: center;
+  z-index: 11;
+
+  transition: left .25s 0s linear;
+
+  &__close{
+    position: fixed;
+    right: -70px;
+    top: 0;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    color: $black;
+    width: 70px;
+    line-height: 40px;
+    font-size: 10px;
+    background-color: $white;
+    font-family: 'PF Din', sans-serif;
+    transition: right .1s .25s linear;
+    z-index: 20;
+    }
+
+  &__lightbox{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+
+    display: none;
+    }
+
+  &__wrapper{
+    display: inline-block;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    vertical-align: middle;
+    font-size: 0;
+    line-height: 0;
+    white-space: normal;
+    text-align-last: auto;
+    max-width: 1150px;
+    margin: 0 auto;
+    color: $white;
+    text-align: left;
+    height: 100%;
+
+    a{
+      color: $white;
+      text-decoration: none;
+      }
+
+    &>*{
+      flex-grow: 0;
+      flex-shrink: 0;
+      }
+    }
+
+  &__details{
+    font-family: 'PF Din', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    width: 340px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 20px;
+    }
+
+  &__brief{
+    width: 150px;
+    font-family: 'PF Din', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 20px;
+    white-space: nowrap;
+    p{
+      padding: 0 0 0 25px;
+      }
+    }
+
+  &__monthly{
+    background: url('../svg/id.svg') 0 50% no-repeat;
+    margin: 25px 0 0;
+    line-height: 25px;
+    }
+
+  &__hourly{
+    background: url('../svg/usd.svg') 0 1px no-repeat;
+    }
+  &__opening{
+    background: url('../svg/clock.svg') 0 1px no-repeat;
+    }
+  &__contacts{
+    background: url('../svg/tel.svg') 0 1px no-repeat;
+    padding: 0 0 0 25px;
+    }
+
+  &__hourly,
+  &__opening,
+  &__contacts{
+    margin: 0 0 15px;
+    }
+
+  &__map{
+    position: relative;
+    margin: 0 20px;
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    font-family: 'PF Din', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+
+    background-color: $dark-green;
+
+    &:after{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 300px;
+      content: "";
+      display: block;
+      font-size: 0;
+      line-height: 0;
+      overflow: hidden;
+
+      background-image: url('http://maps.googleapis.com/maps/api/staticmap?center=Украина,Киев,Воздвиженская,9-19&zoom=18&size=600x600&sensor=false');
+      background-size: cover;
+      mix-blend-mode: multiply;
+      }
+    }
+
+  &__address{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 140px;
+    height: 160px;
+    padding:140px 0 0 160px;
+    background: url('../svg/magnifier.svg') 100px 138px no-repeat;
+    background-size: 65px 65px;
+    z-index: 3;
+    }
+  }
