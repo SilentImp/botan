@@ -461,6 +461,7 @@ Information = (function() {
     $(window).on('resize', this.resizer);
     this.open_button.on('click', this.open);
     this.close_button.on('click', this.close);
+    this.lightbox.on('click', this.close);
   }
 
   Information.prototype.open = function(event) {
