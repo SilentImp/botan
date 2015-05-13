@@ -477,10 +477,11 @@ Information = (function() {
   Information.prototype.resizer = function() {
     var max;
     this.vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    max = Math.max(.6625 * this.vh, 340);
+    console.log(this.vh);
+    max = Math.max(.6625 * this.vh, 300);
     return this.info.css({
-      'min-height': max + 'px',
-      'line-height': max + 'px'
+      'height': (max - 80) + 'px',
+      'line-height': (max - 80) + 'px'
     });
   };
 
