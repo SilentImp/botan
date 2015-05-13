@@ -22,7 +22,7 @@ var gulp = require('gulp')
         'jade': './source/jade/**/*.jade'
         , 'list': './source/list/index.jade'
         , 'copy': './source/copy/**/*'
-        , 'coffee': './source/coffee/**/*.coffee'
+        , 'coffee': './source/**/*.coffee'
         , 'js': './source/js/**/*.js'
         , 'scss': './source/sass/**/*.scss'
         , 'css': './source/css/*.css'

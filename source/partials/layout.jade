@@ -13,39 +13,45 @@ html(lang="ru")
       a.info(href="#") Инфо
       a.video(href="#") 
         span
-        |  – посмотреть видео
+        | – посмотреть видео
     
-    .information__lightbox
-    section.information
-      a.information__close(href="#") Закрыть
-      .information__wrapper
+    .information__crop
+      .information__lightbox
+      section.information
       
-        .information__details
-          p Жизнь, творческий путь, идейные искания Л. Н. Толстого по-прежнему увлекают умы наших современников, которые пытаются понять саму сущность творчества писателя и его учения. «Война и мир» — вершина творчества Л. Н. Толстого, как никакое другое произведение писателя отражает глубину его мироощущения и философии. Эта книга из разряда вечных, потому что она обо всем — о жизни и смерти, о любви и чести, о мужестве и героизме, о славе и подвиге, о войне и мире. 
-        
-        .information__brief
-        
-          .information__contacts
-            a(href="tel:+380445678990") (044) 567 89 90
-            br
-            a(href="mailto:mail@idichitai.com.ua") mail@idichitai.com.ua
+        nav.information__menu
+          a.information__video(href="#") 
+            span
+            | – посмотреть видео
+          a.information__close(href="#") Закрыть
           
-          .information__opening
-            p 7:00 – 11:00
-            p 12:00 – 23:00
-
-          p.information__hourly 30 грн/час
-
-          p.information__monthly 1400 грн/мес
-
-        .information__map
-          address.information__address
-            | г. киев 
-            br
-            | ул. воздвиженская 
-            br
-            | 9-19
+        .information__wrapper
+          .information__details
+            p Жизнь, творческий путь, идейные искания Л. Н. Толстого по-прежнему увлекают умы наших современников, которые пытаются понять саму сущность творчества писателя и его учения. «Война и мир» — вершина творчества Л. Н. Толстого, как никакое другое произведение писателя отражает глубину его мироощущения и философии. Эта книга из разряда вечных, потому что она обо всем — о жизни и смерти, о любви и чести, о мужестве и героизме, о славе и подвиге, о войне и мире. 
           
+          .information__brief
+          
+            .information__contacts
+              a(href="tel:+380445678990") (044) 567 89 90
+              br
+              a(href="mailto:mail@idichitai.com.ua") mail@idichitai.com.ua
+            
+            .information__opening
+              p 7:00 – 11:00
+              p 12:00 – 23:00
+
+            p.information__hourly 30 грн/час
+
+            p.information__monthly 1400 грн/мес
+
+          .information__map
+            address.information__address
+              | г. киев 
+              br
+              | ул. воздвиженская 
+              br
+              | 9-19
+            
           
         
     block content

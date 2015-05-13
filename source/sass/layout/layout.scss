@@ -37,7 +37,6 @@ html{
         font-family: 'PF Din', sans-serif;
         }
       .video{
-        z-index: 20;
         position: absolute;
         left: 0;
         top: 0;
@@ -47,9 +46,9 @@ html{
         text-transform: uppercase;
         line-height: 40px;
         font-size: 10px;
-        transition: color .25s;
+        transition: color .15s 0s;
         span{
-          transition: background .25s;
+          transition: background .15s 0s;
           display: inline-block;
           vertical-align: top;
           width: 40px;
@@ -146,7 +145,7 @@ html{
         font-style: 0;
         line-height: 0;
         text-indent: -999px;
-        &:before{
+        span{
           position: absolute;
           top: 0;
           left: 0;

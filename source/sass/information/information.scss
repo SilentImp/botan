@@ -11,17 +11,11 @@ html.no-mix-blend-mode>body .information{
   }
 
 html>body.info__popup{
-  &>header .video{
-    z-index: 20;
-    color: $white;
-    span{
-      background-image: url('../svg/cinema-black.svg');
-      background-color: $white;
-      }
-    }
+  overflow-y: hidden;
   .information{
-    transition: left .25s .1s linear;
-    left: 0;
+    &__crop{
+      left: 0;
+      }
     &__close{
       right: 0;
       transition: right .1s 0s linear;
@@ -33,29 +27,70 @@ html>body.info__popup{
   }
 
 .information{
-  position: absolute;
 
-  top: 0;
-  left: 100%;
+  min-height: 300px;
+  line-height: 300px;
 
-  width: 100%;
-  width: 100vw;
-
-
-  min-height: 340px;
-  line-height: 340px;
+  padding: 60px 0 20px;
 
   height: 66.25vh;
   line-height: 66.25vh;
 
   background-color: $black;
   text-align: center;
-  z-index: 11;
 
-  transition: left .25s 0s linear;
+  z-index: 15;
+  position: relative;
+
+  &__crop{
+    z-index: 11;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    left: 100%;
+
+    width: 100%;
+    width: 100vw;
+
+    transition: left .25s linear;
+    }
+
+  &__video{
+    z-index: 20;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-decoration: none;
+    color: $white;
+    font-family: 'PF Din', sans-serif;
+    text-transform: uppercase;
+    line-height: 40px;
+    font-size: 10px;
+    transition: color .15s 0s;
+    span{
+      transition: background .15s 0s;
+      display: inline-block;
+      vertical-align: top;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-style: 0;
+      overflow: hidden;
+      margin: 0 5px 0 0;
+      background: $white url('../svg/cinema-black.svg') 50% 50% no-repeat;
+      }
+    }
 
   &__close{
-    position: fixed;
+    position: absolute;
     right: -70px;
     top: 0;
     text-decoration: none;
@@ -67,19 +102,20 @@ html>body.info__popup{
     font-size: 10px;
     background-color: $white;
     font-family: 'PF Din', sans-serif;
-    transition: right .1s .25s linear;
+    transition: right .25s linear;
     z-index: 20;
     }
 
   &__lightbox{
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
     height: 100%;
-    z-index: 10;
+    overflow: auto;
+    z-index: 14;
     cursor: pointer;
 
     display: none;
@@ -183,24 +219,10 @@ html>body.info__popup{
     z-index: 1;
     overflow: hidden;
 
-    background-color: $dark-green;
+    background: $dark-green  url('http://maps.googleapis.com/maps/api/staticmap?center=Украина,Киев,Воздвиженская,9-19&zoom=18&size=640x640&sensor=false&scale=2') 50% 50% no-repeat;
+    background-size: auto 300px;
 
-    &:after{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 300px;
-      height: 300px;
-      content: "";
-      display: block;
-      font-size: 0;
-      line-height: 0;
-      overflow: hidden;
-
-      background-image: url('http://maps.googleapis.com/maps/api/staticmap?center=Украина,Киев,Воздвиженская,9-19&zoom=18&size=600x600&sensor=false');
-      background-size: cover;
-      mix-blend-mode: multiply;
-      }
+    background-blend-mode: multiply;
     }
 
   &__address{
@@ -213,5 +235,93 @@ html>body.info__popup{
     background: url('../svg/magnifier.svg') 100px 138px no-repeat;
     background-size: 65px 65px;
     z-index: 3;
+    }
+  }
+
+
+@media screen and (max-width: 910px) {
+  html>body .information{
+    &__wrapper{
+      max-width: none;
+      display: block;
+      position: relative;
+      }
+    &__details{
+      width: auto;
+      margin: 0 340px 20px 20px;
+      padding: 0;
+      }
+    &__brief{
+      padding: 0;
+      position: relative;
+      margin: 0 340px 0 20px;
+      display: block;
+      width: auto;
+      white-space: normal;
+      font-size: 0;
+      &>*{
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        overflow: hidden;
+        margin: 0 0 20px;
+        box-sizing: border-box;
+        font-size: 12px;
+        line-height: 16px;
+        &.information__monthly{
+          top: -4px;
+          position: relative;
+          line-height: 25px;
+          }
+        }
+      }
+    &__map{
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -150px;
+      }
+    }
+  }
+
+@media screen and (max-width: 700px) {
+  html>body .information{
+    &__brief{
+      &>*{
+        width: auto;
+        display: block;
+        }
+      }
+    }
+  }
+
+@media screen and (max-width: 650px) {
+  html>body .information{
+    &__details{
+      margin: 0 20px 20px;
+      }
+    &__brief{
+      margin: 0 20px;
+      &>*{
+        width: 50%;
+        display: inline-block;
+        }
+      }
+    &__address{
+      margin:0 auto;
+      position: static;
+      }
+    &__map{
+      position: relative;
+      right: auto;
+      top: auto;
+      margin: 0;
+      width: 100%;
+      border-radius: 0;
+      background: $dark-green  url('http://maps.googleapis.com/maps/api/staticmap?center=Украина,Киев,Воздвиженская,9-19&zoom=17&size=640x640&sensor=false&scale=2') 50% 50% no-repeat;
+      background-size: cover;
+      background-blend-mode: multiply;
+      }
     }
   }

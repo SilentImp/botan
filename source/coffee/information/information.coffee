@@ -17,6 +17,7 @@ class Information
 
     @open_button.on 'click', @open
     @close_button.on 'click', @close
+    @lightbox.on 'click', @close
 
   open: (event)=>
     event.preventDefault()
@@ -29,11 +30,13 @@ class Information
   resizer: =>
     @vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 
-    max = Math.max .6625*@vh, 340
+    console.log @vh
+
+    max = Math.max .6625*@vh, 300
 
     @info.css
-      'min-height': max+'px'
-      'line-height': max+'px'
+      'height': (max-80)+'px'
+      'line-height': (max-80)+'px'
 
 $(document).ready ->
   new Information
