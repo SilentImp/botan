@@ -438,3 +438,59 @@ book = (function() {
 $(document).ready(function() {
   return new book;
 });
+
+var Information,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+Information = (function() {
+  function Information() {
+    this.resizer = bind(this.resizer, this);
+    this.close = bind(this.close, this);
+    this.open = bind(this.open, this);
+    this.info = $('.information');
+    this.lightbox = $('.information__lightbox');
+    if (this.info.length === 0 || this.lightbox.length === 0) {
+      delete this.info;
+      delete this.lightbox;
+      return;
+    }
+    this.body = $('body');
+    this.open_button = this.body.find('>header .info');
+    this.close_button = this.info.find('.information__close');
+    this.resizer();
+    $(window).on('resize', this.resizer);
+    this.open_button.on('click', this.open);
+    this.close_button.on('click', this.close);
+  }
+
+  Information.prototype.open = function(event) {
+    event.preventDefault();
+    return this.body.addClass('info__popup');
+  };
+
+  Information.prototype.close = function(event) {
+    event.preventDefault();
+    return this.body.removeClass('info__popup');
+  };
+
+  Information.prototype.resizer = function() {
+    var max;
+    this.vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    max = Math.max(.6625 * this.vh, 340);
+    return this.info.css({
+      'min-height': max + 'px',
+      'line-height': max + 'px'
+    });
+  };
+
+  return Information;
+
+})();
+
+$(document).ready(function() {
+  return new Information;
+});
+
+Modernizr.addTest('mix-blend-mode', function() {
+  return Modernizr.testProp('mixBlendMode');
+});
