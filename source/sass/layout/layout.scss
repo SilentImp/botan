@@ -2,17 +2,25 @@
 
 html{
   height: 100%;
+  width: 100%;
+  position: relative;
   body{
     font-family: Times, 'Times New Roman', sans-serif;
     min-height: 770px;
     height: 100vh;
+    width: 100%;
+    max-width:100%;
+    position: relative;
     box-sizing: border-box;
     padding: 0 0 30px;
     text-align: center;
     user-select: none;
     position: relative;
 
+    -ms-overflow-x: hidden;
     overflow-x: hidden;
+
+    zoom: 1;
 
     &.no-transitions *{
       transition: none !important;

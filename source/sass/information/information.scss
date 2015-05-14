@@ -10,16 +10,28 @@ html.no-background-blend-mode>body .information{
     }
   }
 
-html>body.info__popup{
-  overflow-y: hidden;
+html>body.info__map{
+  overflow: hidden;
   .information{
-    &__crop{
-      left: 0;
+    overflow: hidden;
+    }
+  }
+
+html>body.info__popup{
+  &>header{
+    .info{
+      z-index: 22;
       }
-    &__close{
-      right: 0;
-      transition: right .1s 0s linear;
+    .video{
+      color: $white;
+      z-index: 25;
+      span{
+        background-color: $white;
+        background-image: url('../svg/cinema-black.svg');
+        }
       }
+    }
+  .information{
     &__lightbox{
       display: block;
       }
@@ -38,8 +50,8 @@ html>body.info__popup{
     font-style: 0;
     line-height: 0;
     }
-  &__title{
-
+  &__text{
+    font-family: 'PF Din', sans-serif;
     }
   }
 
@@ -50,65 +62,27 @@ html>body.info__popup{
 
   padding: 60px 0 20px;
 
+  width: 0;
+
   height: 66.25vh;
   line-height: 66.25vh;
 
   background-color: $black;
   text-align: center;
 
+  overflow: hidden;
+
   z-index: 15;
-  position: relative;
 
-  &__crop{
-    z-index: 11;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  left: 100%;
 
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    left: 100%;
-
-    width: 100%;
-    width: 100vw;
-
-    transition: left .25s linear;
-    }
-
-  &__video{
-    z-index: 20;
-    position: absolute;
-    left: 0;
-    top: 0;
-    text-decoration: none;
-    color: $white;
-    font-family: 'PF Din', sans-serif;
-    text-transform: uppercase;
-    line-height: 40px;
-    font-size: 10px;
-    transition: color .15s 0s;
-    span{
-      transition: background .15s 0s;
-      display: inline-block;
-      vertical-align: top;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-      font-style: 0;
-      overflow: hidden;
-      margin: 0 5px 0 0;
-      background: $white url('../svg/cinema-black.svg') 50% 50% no-repeat;
-      }
-    }
+  display: none;
 
   &__close{
     position: absolute;
-    right: -70px;
+    right: 0;
     top: 0;
     text-decoration: none;
     text-transform: uppercase;
@@ -119,8 +93,11 @@ html>body.info__popup{
     font-size: 10px;
     background-color: $white;
     font-family: 'PF Din', sans-serif;
-    transition: right .25s linear;
-    z-index: 20;
+
+    opacity: 0;
+    display: none;
+    z-index: 25;
+
     &-map{
       position: absolute;
       right: 0;
@@ -293,6 +270,7 @@ html>body.info__popup{
     background: url('../svg/magnifier.svg') 100px 138px no-repeat;
     background-size: 65px 65px;
     z-index: 3;
+    line-height: 12px;
     }
   }
 

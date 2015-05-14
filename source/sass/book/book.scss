@@ -91,7 +91,6 @@
     position: relative;
     background-color: $white;
     z-index: 1;
-    overflow: hidden;
     &:before{
       content: "";
       display: block;
@@ -303,6 +302,7 @@
       width: 100%;
       }
     &__pages{
+      overflow: hidden;
       border-left: 1px solid $third-black;
       &:before{
         display: none;

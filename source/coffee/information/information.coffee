@@ -10,7 +10,7 @@ class Information
 
     @body = $ 'body'
     @open_button = @body.find '>header .info'
-    @close_button = @info.find '.information__close'
+    @close_button = $ '.information__close'
 
     @map = $ '.information__map-wrapper'
     @map_container = $ '.information__map-full'
@@ -50,19 +50,56 @@ class Information
       @infowindow.open @gm, @marker
 
   showMap: =>
+    @body.addClass 'info__map'
     @map_container.addClass 'visible'
 
   hideMap: (event)=>
     event.preventDefault()
+    @body.removeClass 'info__map'
     @map_container.removeClass 'visible'
 
-  open: (event)=>
+  open: =>
     event.preventDefault()
     @body.addClass 'info__popup'
+
+    @close_button.css
+      'display': 'block'
+
+    @close_button.stop().animate
+        'opacity': '1'
+      ,
+        'duration': @time
+
+    @info.css
+      'display': 'block'
+      'width': '100%'
+
+    @info.stop().animate
+        'left': '0'
+      ,
+        'duration': @time
 
   close: (event)=>
     event.preventDefault()
     @body.removeClass 'info__popup'
+    @close_button.stop().animate
+        'opacity': '0'
+      ,
+        'duration': @time
+
+    @info.stop().animate
+        'left': '100%'
+      ,
+        'duration': @time
+        'complete': @endHideMapAnimation
+
+  endHideMapAnimation: =>
+    @close_button.css
+      'display': 'none'
+    @info.css
+      'display': 'none'
+      'width': '0'
+
 
   resizer: =>
     @vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
