@@ -27,6 +27,7 @@
     "gulp-sourcemaps": "~1.5.2",
     "gulp": "~3.8.11",
     "gulp-plumber": "~1.0.0",
-    "gulp-watch": "~4.2.4"
+    "gulp-watch": "~4.2.4",
+    "ramjet": "~0.4.5"
   }
 }

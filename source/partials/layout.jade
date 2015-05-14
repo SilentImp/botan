@@ -15,6 +15,10 @@ html(lang="ru")
         span
         | – посмотреть видео
     
+    .information__map-full
+      a.information__close-map(href="#") Закрыть
+      .information__map-wrapper
+    
     .information__crop
       .information__lightbox
       section.information
@@ -46,9 +50,9 @@ html(lang="ru")
 
           .information__map
             address.information__address
-              | г. киев 
+              | г. Киев 
               br
-              | ул. воздвиженская 
+              | ул. Воздвиженская 
               br
               | 9-19
             
@@ -59,9 +63,11 @@ html(lang="ru")
       a.map(href="https://goo.gl/maps/jFOIK", target="_blank") библиотека “botan”, ул. воздвижеская 78-68
       a.developed-by(href="http://territory.com.ua/", target="_blank") CB T
 
+    script(src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAqLD93GvQqi6bMkWV1vNMQT5813h7mZAY")
     script(src="js/modernizr/modernizr.js")
     script(src="js/hammer.js/hammer.min.js")
     script(src="js/jquery/dist/jquery.min.js")
     script(src="js/keymaster/keymaster.js")
+    script(src="js/ramjet/dist/ramjet.min.js")
     script(src="js/transitionEnd/src/transition-end.min.js")
     script(src="js/scripts.js", async, def)

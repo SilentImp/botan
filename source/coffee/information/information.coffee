@@ -12,12 +12,49 @@ class Information
     @open_button = @body.find '>header .info'
     @close_button = @info.find '.information__close'
 
+    @map = $ '.information__map-wrapper'
+    @map_container = $ '.information__map-full'
+    @map_open_button = $ '.information__map'
+    @map_close_button = $ '.information__close-map'
+
     @resizer()
     $(window).on 'resize', @resizer
 
     @open_button.on 'click', @open
     @close_button.on 'click', @close
     @lightbox.on 'click', @close
+    @map_open_button.on 'click', @showMap
+    @map_close_button.on 'click', @hideMap
+
+    @location = new google.maps.LatLng(50.46117, 30.51004)
+    @gm = new google.maps.Map @map.get(0),
+      center: @location
+      zoom: 16
+      mapTypeControl: false
+      panControl: true
+      zoomControl: true
+      scaleControl: true
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+
+    @infowindow = new google.maps.InfoWindow
+      content: '<h2 class="marker__title">bOtaN</h2><p class="marker__text">г. Киев, ул. Воздвиженская, 9-19</p>'
+
+    @marker = new google.maps.Marker
+      position: @location
+      map: @gm
+      title: 'bOtaN'
+
+    @infowindow.open @gm, @marker
+
+    google.maps.event.addListener @marker, 'click', =>
+      @infowindow.open @gm, @marker
+
+  showMap: =>
+    @map_container.addClass 'visible'
+
+  hideMap: (event)=>
+    event.preventDefault()
+    @map_container.removeClass 'visible'
 
   open: (event)=>
     event.preventDefault()
@@ -30,8 +67,6 @@ class Information
   resizer: =>
     @vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 
-    console.log @vh
-
     max = Math.max .6625*@vh, 300
 
     @info.css
@@ -43,3 +78,6 @@ $(document).ready ->
 
 Modernizr.addTest 'mix-blend-mode', ()->
     return Modernizr.testProp 'mixBlendMode'
+
+Modernizr.addTest 'background-blend-mode', ()->
+    return Modernizr.testProp 'backgroundBlendMode'

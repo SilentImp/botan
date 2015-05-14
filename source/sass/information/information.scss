@@ -1,6 +1,6 @@
 @import '../helper/helper';
 
-html.no-mix-blend-mode>body .information{
+html.no-background-blend-mode>body .information{
   &__map{
     background: $dark-green url('../images/map.jpg') 50% 50% no-repeat;
     background-size: cover;
@@ -23,6 +23,23 @@ html>body.info__popup{
     &__lightbox{
       display: block;
       }
+    }
+  }
+
+.marker{
+  &__title{
+    width: 80px;
+    height: 40px;
+    overflow: hidden;
+    margin: auto;
+    text-decoration: none;
+    background: url('../svg/logotype.svg') 50% 50% no-repeat;
+    text-indent: -999px;
+    font-style: 0;
+    line-height: 0;
+    }
+  &__title{
+
     }
   }
 
@@ -104,6 +121,23 @@ html>body.info__popup{
     font-family: 'PF Din', sans-serif;
     transition: right .25s linear;
     z-index: 20;
+    &-map{
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 31;
+
+      text-decoration: none;
+      text-transform: uppercase;
+      text-align: center;
+      color: $black;
+      width: 70px;
+      line-height: 40px;
+      font-size: 10px;
+      background-color: $white;
+      font-family: 'PF Din', sans-serif;
+      cursor: pointer;
+      }
     }
 
   &__lightbox{
@@ -223,6 +257,30 @@ html>body.info__popup{
     background-size: auto 300px;
 
     background-blend-mode: multiply;
+
+    &-wrapper{
+      width: 100%;
+      height: 100%;
+      width: 100vw;
+      height: 100vh;
+      }
+
+    &-full{
+      line-height: 1.4;
+      font-style: 100%;
+      position: fixed;
+      bottom: 100%;
+      right: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 30;
+      transition: bottom .25s;
+      &.visible{
+        bottom: 0;
+        }
+      }
     }
 
   &__address{
