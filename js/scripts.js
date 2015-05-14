@@ -447,6 +447,8 @@ Information = (function() {
     this.resizer = bind(this.resizer, this);
     this.close = bind(this.close, this);
     this.open = bind(this.open, this);
+    this.hideMap = bind(this.hideMap, this);
+    this.showMap = bind(this.showMap, this);
     this.info = $('.information');
     this.lightbox = $('.information__lightbox');
     if (this.info.length === 0 || this.lightbox.length === 0) {
@@ -457,12 +459,51 @@ Information = (function() {
     this.body = $('body');
     this.open_button = this.body.find('>header .info');
     this.close_button = this.info.find('.information__close');
+    this.map = $('.information__map-wrapper');
+    this.map_container = $('.information__map-full');
+    this.map_open_button = $('.information__map');
+    this.map_close_button = $('.information__close-map');
     this.resizer();
     $(window).on('resize', this.resizer);
     this.open_button.on('click', this.open);
     this.close_button.on('click', this.close);
     this.lightbox.on('click', this.close);
+    this.map_open_button.on('click', this.showMap);
+    this.map_close_button.on('click', this.hideMap);
+    this.location = new google.maps.LatLng(50.46117, 30.51004);
+    this.gm = new google.maps.Map(this.map.get(0), {
+      center: this.location,
+      zoom: 16,
+      mapTypeControl: false,
+      panControl: true,
+      zoomControl: true,
+      scaleControl: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    this.infowindow = new google.maps.InfoWindow({
+      content: '<h2 class="marker__title">bOtaN</h2><p class="marker__text">г. Киев, ул. Воздвиженская, 9-19</p>'
+    });
+    this.marker = new google.maps.Marker({
+      position: this.location,
+      map: this.gm,
+      title: 'bOtaN'
+    });
+    this.infowindow.open(this.gm, this.marker);
+    google.maps.event.addListener(this.marker, 'click', (function(_this) {
+      return function() {
+        return _this.infowindow.open(_this.gm, _this.marker);
+      };
+    })(this));
   }
+
+  Information.prototype.showMap = function() {
+    return this.map_container.addClass('visible');
+  };
+
+  Information.prototype.hideMap = function(event) {
+    event.preventDefault();
+    return this.map_container.removeClass('visible');
+  };
 
   Information.prototype.open = function(event) {
     event.preventDefault();
@@ -477,7 +518,6 @@ Information = (function() {
   Information.prototype.resizer = function() {
     var max;
     this.vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    console.log(this.vh);
     max = Math.max(.6625 * this.vh, 300);
     return this.info.css({
       'height': (max - 80) + 'px',
@@ -495,4 +535,8 @@ $(document).ready(function() {
 
 Modernizr.addTest('mix-blend-mode', function() {
   return Modernizr.testProp('mixBlendMode');
+});
+
+Modernizr.addTest('background-blend-mode', function() {
+  return Modernizr.testProp('backgroundBlendMode');
 });
