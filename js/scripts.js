@@ -445,6 +445,7 @@ var Information,
 Information = (function() {
   function Information() {
     this.resizer = bind(this.resizer, this);
+    this.endHideMapAnimation = bind(this.endHideMapAnimation, this);
     this.close = bind(this.close, this);
     this.open = bind(this.open, this);
     this.hideMap = bind(this.hideMap, this);
@@ -458,7 +459,7 @@ Information = (function() {
     }
     this.body = $('body');
     this.open_button = this.body.find('>header .info');
-    this.close_button = this.info.find('.information__close');
+    this.close_button = $('.information__close');
     this.map = $('.information__map-wrapper');
     this.map_container = $('.information__map-full');
     this.map_open_button = $('.information__map');
@@ -497,22 +498,62 @@ Information = (function() {
   }
 
   Information.prototype.showMap = function() {
+    this.body.addClass('info__map');
     return this.map_container.addClass('visible');
   };
 
   Information.prototype.hideMap = function(event) {
     event.preventDefault();
+    this.body.removeClass('info__map');
     return this.map_container.removeClass('visible');
   };
 
-  Information.prototype.open = function(event) {
+  Information.prototype.open = function() {
     event.preventDefault();
-    return this.body.addClass('info__popup');
+    this.body.addClass('info__popup');
+    this.close_button.css({
+      'display': 'block'
+    });
+    this.close_button.stop().animate({
+      'opacity': '1'
+    }, {
+      'duration': this.time
+    });
+    this.info.css({
+      'display': 'block',
+      'width': '100%'
+    });
+    return this.info.stop().animate({
+      'left': '0'
+    }, {
+      'duration': this.time
+    });
   };
 
   Information.prototype.close = function(event) {
     event.preventDefault();
-    return this.body.removeClass('info__popup');
+    this.body.removeClass('info__popup');
+    this.close_button.stop().animate({
+      'opacity': '0'
+    }, {
+      'duration': this.time
+    });
+    return this.info.stop().animate({
+      'left': '100%'
+    }, {
+      'duration': this.time,
+      'complete': this.endHideMapAnimation
+    });
+  };
+
+  Information.prototype.endHideMapAnimation = function() {
+    this.close_button.css({
+      'display': 'none'
+    });
+    return this.info.css({
+      'display': 'none',
+      'width': '0'
+    });
   };
 
   Information.prototype.resizer = function() {
