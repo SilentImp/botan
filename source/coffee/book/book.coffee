@@ -365,22 +365,6 @@ class book
     @right.addClass('book__page_right').removeAttr 'style'
     @clickable = true
 
-  prev_part_5: =>
-    if !@part_five_flag
-      return
-    @part_five_flag = false
-
-    @right_tmp.removeClass('book__page_right-prev-placed').addClass('book__page_right')
-    @right.removeClass('book__page_right')
-    @right = @right_tmp
-
-    # transitionEnd(@right_tmp[0]).unbind()
-    window.setTimeout =>
-        @clickable = true
-      ,0
-
-
-
 
 $(document).ready ->
   new book
