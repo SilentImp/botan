@@ -277,6 +277,7 @@ html>body.info__popup{
 
 @media screen and (max-width: 910px) {
   html>body .information{
+    height: auto;
     &__wrapper{
       max-width: none;
       display: block;

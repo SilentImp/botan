@@ -106,9 +106,16 @@ class Information
 
     max = Math.max .6625*@vh, 300
 
-    @info.css
-      'height': (max-80)+'px'
-      'line-height': (max-80)+'px'
+    if Modernizr.mq('(min-width: 911px)')
+      @info.css
+        'height': (max-80)+'px'
+        'line-height': (max-80)+'px'
+
+    else
+
+      @info.css
+        'height': 'auto'
+        'line-height': '300px'
 
 $(document).ready ->
   new Information
