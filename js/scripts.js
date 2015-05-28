@@ -544,10 +544,17 @@ Information = (function() {
     var max;
     this.vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     max = Math.max(.6625 * this.vh, 300);
-    return this.info.css({
-      'height': (max - 80) + 'px',
-      'line-height': (max - 80) + 'px'
-    });
+    if (Modernizr.mq('(min-width: 911px)')) {
+      return this.info.css({
+        'height': (max - 80) + 'px',
+        'line-height': (max - 80) + 'px'
+      });
+    } else {
+      return this.info.css({
+        'height': 'auto',
+        'line-height': '300px'
+      });
+    }
   };
 
   return Information;
